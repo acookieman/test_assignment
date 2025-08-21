@@ -40,8 +40,8 @@ print(missing_values_count) #скільки значень відсутні у �
 
 df_ = df.select_dtypes(exclude=['int64', 'float64'])
 for col in df_.columns:
-    print(df_[col].unique()[:5])
-    print(df_[col].value_counts().head(5))
+    print(df_[col].unique()[:5])#принт перших 5 унікальних
+    print(df_[col].value_counts().head(5))#принт 5 найчастіших
     print(df_[col].value_counts().shape)
 
 
