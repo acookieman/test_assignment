@@ -40,8 +40,9 @@ print(missing_values_count) #скільки значень відсутні у �
 
 df_ = df.select_dtypes(exclude=['int64', 'float64'])
 for col in df_.columns:
-    print(df_[col].unique())
-    print(df_[col].value_counts())
+    print(df_[col].unique()[:5])
+    print(df_[col].value_counts().head(5))
+    print(df_[col].value_counts().shape)
 
 
 df_filtered = df[(df["Quantity"]>=0) & (df["UnitPrice"]>=0)]
@@ -49,9 +50,9 @@ print (df_filtered) #фільтрування колонок, щоб числа 
 
 df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'], dayfirst = True, errors = 'coerce')
 print("Тип:", df['InvoiceDate'].dtype)
-print("Пропущених дат:", df['InvoiceDate'].isna().sum())
+print("Пропущених дат:", df['InvoiceDate'].isna().sum()) #вивід кількості пропущених дат
 df.info
 
 corr_value = df['Quantity'].corr(df['UnitPrice'])
-print("Кореляція між кількістю і вартістю =", corr_value)
-print('Кореляція між усіма числовими колонками =',  df.corr(numeric_only=True,))
+print("Кореляція між кількістю і вартістю =", corr_value) #Побудова кореляції між кількістю і вартістю
+print('Кореляція між усіма числовими колонками =',  df.corr(numeric_only=True,)) #побудова кореляції між усіма стовпчиками з числовим значенням
