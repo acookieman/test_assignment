@@ -36,4 +36,22 @@ print("QuantMed = ", med0, "\n"
 
 df = pd.read_csv(io.StringIO(response0.text))
 missing_values_count = df.isnull().sum()
-print(missing_values_count)
+print(missing_values_count) #скільки значень відсутні у кожній колонці
+
+df_ = df.select_dtypes(exclude=['int64', 'float64'])
+for col in df_.columns:
+    print(df_[col].unique())
+    print(df_[col].value_counts())
+
+
+df_filtered = df[(df["Quantity"]>=0) & (df["UnitPrice"]>=0)]
+print (df_filtered) #фільтрування колонок, щоб числа була більше або дорівнювали 0
+
+df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'], dayfirst = True, errors = 'coerce')
+print("Тип:", df['InvoiceDate'].dtype)
+print("Пропущених дат:", df['InvoiceDate'].isna().sum())
+df.info
+
+corr_value = df['Quantity'].corr(df['UnitPrice'])
+print("Кореляція між кількістю і вартістю =", corr_value)
+print('Кореляція між усіма числовими колонками =',  df.corr(numeric_only=True,))
