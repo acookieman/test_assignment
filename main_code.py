@@ -56,3 +56,7 @@ df.info
 corr_value = df['Quantity'].corr(df['UnitPrice'])
 print("Кореляція між кількістю і вартістю =", corr_value) #Побудова кореляції між кількістю і вартістю
 print('Кореляція між усіма числовими колонками =',  df.corr(numeric_only=True,)) #побудова кореляції між усіма стовпчиками з числовим значенням
+
+pd.Grouper(key="InvoiceDate", freq='M')
+df.groupby(by='Quantity', axis=0, level=None, as_index=False, sort=False, dropna=False, observed=True)
+df.groupby(pd.Grouper(key='InvoiceDate', freq="M"))['Quantity'].sum()
