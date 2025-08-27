@@ -59,11 +59,11 @@ corr_value = df['Quantity'].corr(df['UnitPrice'])
 print("Кореляція між кількістю і вартістю =", corr_value) #Побудова кореляції між кількістю і вартістю
 print('Кореляція між усіма числовими колонками =',  df.corr(numeric_only=True,)) #побудова кореляції між усіма стовпчиками з числовим значенням
 
-bins = [0,250,500, 1000, 2000, 5000, 10000, 70000, df["Quantity"].max()]
-labels = ['0-250', '250-500', '500-1k', '1k-2k', '2k-5k', '5k-10k', '10k-70k', '70k+']
+bins = [0, 50, 70, 100, 150, 200, 250, 500, df["Quantity"].max()]
+labels = ['0-50', '50-70', '70-100', '100-150', '150-200', '200-250', '250-500', '500+']
 df['QuantityRange'] = pd.cut(df['Quantity'], bins=bins, labels=labels, include_lowest=True, ordered=True)
 df['QuantityRange'].value_counts().reindex(labels).plot(kind='bar')
 plt.title('Кількість записів у кожному діапазоні Quantity')
-plt.xlabel('Діапазон Quality')
+plt.xlabel('Діапазон Quantity')
 plt.ylabel('Кількість рядків')
 plt.show()
