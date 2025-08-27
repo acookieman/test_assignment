@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 url = "https://raw.githubusercontent.com/acookieman/test_assignment/refs/heads/main/train_data.csv"
 df = pd.read_csv(url)
 print (df.head()) #друк "голови"
@@ -58,8 +59,11 @@ corr_value = df['Quantity'].corr(df['UnitPrice'])
 print("Кореляція між кількістю і вартістю =", corr_value) #Побудова кореляції між кількістю і вартістю
 print('Кореляція між усіма числовими колонками =',  df.corr(numeric_only=True,)) #побудова кореляції між усіма стовпчиками з числовим значенням
 
-pd.Grouper(key="InvoiceDate", freq='ME')
-df.groupby(by='Quantity', level=None, as_index=False, sort=False, dropna=False, observed=True)
-df.groupby(pd.Grouper(key='InvoiceDate', freq="ME"))['Quantity'].sum()
-df.plot.scatter(x="UnitPrice", y="Quantity")
+bins = [0,250,500, 1000, 2000, 5000, 10000, 70000, df["Quantity"].max()]
+labels = ['0-250', '250-500', '500-1k', '1k-2k', '2k-5k', '5k-10k', '10k-70k', '70k+']
+df['QuantityRange'] = pd.cut(df['Quantity'], bins=bins, labels=labels, include_lowest=True, ordered=True)
+df['QuantityRange'].value_counts().reindex(labels).plot(kind='bar')
+plt.title('Кількість записів у кожному діапазоні Quantity')
+plt.xlabel('Діапазон Quality')
+plt.ylabel('Кількість рядків')
 plt.show()
